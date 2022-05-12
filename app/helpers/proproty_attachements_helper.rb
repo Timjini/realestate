@@ -1,0 +1,2 @@
+module ProprotyAttachementsHelper
+end

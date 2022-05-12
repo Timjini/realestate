@@ -1,5 +1,9 @@
 class PropertiesController < ApplicationController
   before_action :set_property, only: %i[ show edit update destroy ]
+  before_action :authenticate_user!
+  # before_action :correct_user, only: [:create,:edit, :update, :destroy]
+
+
 
   # GET /properties or /properties.json
   def index
@@ -56,6 +60,11 @@ class PropertiesController < ApplicationController
       format.html { redirect_to properties_url, notice: "Property was successfully destroyed." }
       format.json { head :no_content }
     end
+  end
+
+  def correct_user
+    @properties = current_user.properties.find_by(id: params[:id])
+    redirect_to properties_path , notice: "Not Authorized to edit" if @ask.nil?
   end
 
   private
